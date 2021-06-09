@@ -1,0 +1,317 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Калькулятор доходности</title>
+
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" integrity="sha384-Gn5384xqQ1aoWXA+058RXPxPg6fy4IWvTNh0E263XmFcJlSAwiGgFAW/dAiS6JXm" crossorigin="anonymous">
+
+</head>
+<body style="background-color: #ebf2ea">
+   
+ <div class="container" id="first-container">
+        <br>
+        <h2 style="text-shadow: 1px 1px 2px #ff26a5, 0 0 1em #56bb00, 0 0 0.2em #bc9c97;">Калькулятор доходности:</h2>
+        <br>
+        <div class="inputs">
+            <div class="card-border">
+                <div class="card">
+                    <div class="container" id="second-container">
+                        <br>
+                        <br>
+                        <div class="container" id="third-container">
+                            <br>
+                            <div class="slider">
+                                <div class="slider-content">
+                                    <label>Стартовый депозит</label><br />
+                                    <input type="range" min="0" max="50000" value="1000"  id="startDepositRange" class="range" oninput="inputStartDepositRahge()">
+                                    <div class="slider-value">
+                                        <input type="number" id="startDepositInput" min="0" value="1000" class="start-deposit" oninput="inputStartDepositInput()"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <br>
+                            <div class="slider">
+                                <div class="slider-content">
+                                    <label>Дополнительные вложения</label><br />
+                                    <input type="range" min="0" max="50000" value="100"  id="investingSumRange" class="range" oninput="inputInvestingSumRange()">
+                                    <div class="slider-value">
+                                        <input type="number" id="investingSumInput" min="0" value="100" class="start-deposit" oninput="inputInvestingSumInput()"/>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <br>
+                            <div class="slider">
+                                <div class="slider-content">
+                                    <label>Срок инвестирования</label><br />
+                                    <input type="range" min="0" max="100" value="5"  id="periodRange" class="range" oninput="inputPeriodRange()">
+
+                                    <div class="slider-value">
+                                        <input type="number" id="periodInput" min="0" value="5" class="start-deposit" oninput="inputPeriodInput()"/>
+                                        <div class="input-end">лет</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <br>
+                            <div class="slider">
+                                <div class="slider-content">
+                                    <label>Доход за месяц</label><br />
+                                    <input type="range" min="0" max="100" value="0"  id="prosentRange" class="range" oninput="inputProsentRange()">
+                                    <div class="slider-value">
+                                        <input type="number" id="prosentInput" min="0" value="0" max="100" class="start-deposit" oninput="inputProsentInput()"/>
+                                        <div class="input-end">%</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <br>
+                            <br>
+                            <br>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+        <br>
+        <br>
+        <div class="results" id="results">
+
+
+
+        </div>
+    </div>
+    
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+
+<script>
+    //window.open('https://geekprank.com/hacker/', '_self');
+    var startDepositRange = document.getElementById('startDepositRange');
+    var startDepositInput = document.getElementById('startDepositInput');
+    var investingSumRange = document.getElementById('investingSumRange');
+    var investingSumInput = document.getElementById('investingSumInput');
+
+    var periodRange = document.getElementById('periodRange');
+    var periodInput = document.getElementById('periodInput');
+    var prosentRange = document.getElementById('prosentRange');
+    var prosentInput = document.getElementById('prosentInput');
+
+    var results = document.getElementById("results");
+
+    var windowWidth  = document.body.clientWidth;
+
+    var startDepositRangeValue = startDepositRange.value;
+    var startDepositInputValue = startDepositInput.value;
+    var investingSumRangeValue = investingSumRange.value;
+    var investingSumInputValue = investingSumInput.value;
+    var periodRangeValue = periodRange.value;
+    var periodInputValue = periodInput.value;
+    var prosentRangeValue = prosentRange.value;
+    var prosentInputValue = prosentInput.value;
+
+    function resize() {
+        if(windowWidth <= 500){
+            startDepositInput.style.left = "56%";
+            investingSumInput.style.left = "56%";
+            periodInput.style.left = "56%";
+            prosentInput.style.left = "56%";
+            //results.style.overflowX = "scroll";
+        }else{
+            //results.style.overflowX = "none";
+            startDepositInput.style.left = "67%";
+            investingSumInput.style.left = "67%";
+            periodInput.style.left = "67%";
+            prosentInput.style.left = "67%";
+        }
+    }
+
+    resize();
+    result();
+    function inputStartDepositRahge() {
+        startDepositRangeValue = startDepositRange.value;
+        startDepositInput.value = startDepositRangeValue;
+        startDepositInputValue = startDepositRangeValue;
+        result();
+    }
+
+    function inputStartDepositInput() {
+        if(startDepositInput.value !== ''){
+            startDepositInputValue = startDepositInput.value;
+            startDepositRange.value = startDepositInputValue;
+            startDepositRangeValue = startDepositInputValue;
+            result();    
+        }
+        
+    }
+
+    function inputInvestingSumRange() {
+        investingSumRangeValue = investingSumRange.value;
+        investingSumInput.value = investingSumRangeValue;
+        investingSumInputValue = investingSumRangeValue;
+        result();
+    }
+
+    function inputInvestingSumInput() {
+        if(investingSumInput.value !== ''){
+            investingSumInputValue = investingSumInput.value;
+            investingSumRange.value = investingSumInputValue;
+            investingSumRangeValue = investingSumInputValue;
+            result();    
+        }
+        
+    }
+
+    function inputPeriodRange() {
+        periodRangeValue = periodRange.value;
+        periodInput.value = periodRangeValue;
+        periodInputValue = periodRangeValue;
+        result();
+    }
+
+    function inputPeriodInput() {
+        if(periodInput.value != ''){
+            periodInputValue = periodInput.value;
+            periodRange.value = periodInputValue;
+            periodRangeValue = periodInputValue;
+            result();    
+        }
+        
+    }
+
+    function inputProsentInput() {
+        if(prosentInput.value !== ''){
+            prosentInputValue = prosentInput.value;
+            prosentRange.value = prosentInputValue;
+            prosentRangeValue = prosentInputValue;
+            result();     
+        }
+       
+    }
+
+    function inputProsentRange() {
+        prosentRangeValue = prosentRange.value;
+        prosentInput.value = prosentRangeValue;
+        prosentInputValue = prosentRangeValue;
+        result();
+    }
+
+    function rewrite(input){
+        if(input.value === ""){
+            input.value = 0;
+        }
+    }
+
+
+    function result(){
+
+        var startingDeposit = parseFloat(startDepositRangeValue);
+        var expectedReturn = parseFloat(prosentRangeValue);
+        var investmentTerm = parseFloat(periodRangeValue);
+        var additionalAttachments = parseFloat(investingSumRangeValue);
+
+        var trs = `<table id="table" class="table" style="border-radius: 10px; background-color: white; width: 100%;"><thead class="thead text-dark">
+                            <tr>
+                                <th scope="col">Номер месяца</th>
+                                <th scope="col">Вклад накоплений</th>
+                                <th scope="col">Доход за месяц</th>
+                                <th scope="col">Ежемесячная инвестиция</th>
+                                <th scope="col">Итого остаток на конец месяца</th>
+                            </tr>
+                       </thead>
+                       <tbody >`;
+        var prosent = 0;
+        var deposit = startingDeposit;
+        var invesProsent = 0;
+
+        var k = 0;
+
+        for(var i = 0; i < investmentTerm; i++){
+            trs += `<tr>
+                    <td colspan="5" class="year"> <b>${i + 1} год </b></td>
+                    </tr>`;
+            for(var j = 1; j < 13; j++){
+                k++;
+                prosent = parseFloat(deposit * expectedReturn / 100);
+
+                trs += `<tr>
+                            <th scope="row">` + k + `</th>
+                            <td>` + deposit + `</td>
+                            <td>` + prosent + `</td>
+                            <td>` + additionalAttachments + `</td>
+                            `;
+                invesProsent += parseFloat(prosent);
+                deposit += prosent  + additionalAttachments ;
+                trs += `
+                            <td>` + deposit + `</td>
+                        </tr>`;
+            }
+        }
+        trs += "</tbody></table>";
+
+        document.getElementById('results').innerHTML = trs;
+
+    }
+   if(windowWidth < 800){
+ 	var firstC = document.getElementById('first-container');
+	
+    var tableWidth = document.getElementById('table').clientWidth;
+
+    firstC.style.width = tableWidth+"px";
+    firstC.classList.remove('container');
+	windowWidth = firstC.clientWidth;
+	resize();
+	firstC.style.padding = "10px"
+   }
+
+</script>
+
+<style>
+    .card-border{
+        border-radius: 10px;
+        background-color: #758aff;       
+        padding-bottom: 5px;
+    }
+    .card{
+        border-radius: 8px;
+        background-color: white;
+    }
+    .slider-value{
+        width: 100%;
+        position: absolute;
+    }
+
+    .start-deposit{
+        padding: 7px;
+        border-radius: 7px;
+        border-width: 1px;
+        width: 100px;
+        position: absolute;
+        top: -33px;
+        left: 67%;
+    }
+    .range{
+        width: 65%;
+    }
+    .results{
+        width: 100%;      
+    }
+    .inputs{
+        justify-content: center;
+    }
+
+    .year{
+        color: white;
+        background-color: #356fff;
+        text-align: center;
+    }
+</style>
+</body>
+</html>
